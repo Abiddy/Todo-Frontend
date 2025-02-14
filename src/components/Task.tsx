@@ -30,15 +30,20 @@ export function Task({ id, title, completed, color, onToggle, onDelete }: TaskPr
     }
   };
 
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onToggle();
+  };
+
   return (
     <div 
       onClick={handleClick}
-      className="flex items-center justify-between p-4 bg-zinc-800 rounded-lg group cursor-pointer hover:bg-zinc-700"
+      className="flex items-start justify-between p-4 bg-zinc-800/50 rounded-lg group cursor-pointer hover:bg-zinc-700/50"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-start gap-3 ">
         <button 
-          onClick={onToggle}
-          className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors
+          onClick={handleToggle}
+          className={`flex-shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors mt-2
             ${completed 
               ? `bg-[${getColorValue(color)}] border-[${getColorValue(color)}]` 
               : `border-[${getColorValue(color)}] hover:border-opacity-75`
@@ -55,7 +60,7 @@ export function Task({ id, title, completed, color, onToggle, onDelete }: TaskPr
           )}
         </button>
         
-        <span className={`text-white ${completed ? 'line-through opacity-50' : ''}`}>
+        <span className={`pr-4 text-white ${completed ? 'line-through opacity-50' : ''}`}>
           {title}
         </span>
       </div>

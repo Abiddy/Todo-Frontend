@@ -3,7 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Task } from '@/components/Task';
+import { CreateTaskButton } from '@/components/CreateTaskButton';
 import { useEffect, useState } from 'react';
+import emptyIcon from 'public/empty.png';
 
 interface TaskType {
   id: string;
@@ -44,6 +46,7 @@ export default function Home() {
       });
 
       if (response.ok) {
+        // This is important to update the state to view changes immediately
         setTasks(tasks.map(t => 
           t.id === id ? { ...t, completed: !t.completed } : t
         ));
@@ -68,53 +71,53 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8">
-      {/* Header */}
-      <div className="flex items-center gap-2 text-2xl font-bold">
-        <Image 
-          src="/rocket-icon.svg" 
-          alt="Todo App Logo" 
-          width={24} 
-          height={24} 
-        />
-        <span className="text-[#4AA7E3]">Todo</span>
-        <span className="text-[#8B5CF6]">App</span>
-      </div>
+    <>
+      {/* Reusable Button Component */}
+    
+        <CreateTaskButton />
+      
 
-      {/* Create Task Button */}
-      <Link 
-        href="/task"
-        className="w-full max-w-2xl mt-8 p-4 bg-[#4AA7E3] text-white rounded-lg hover:bg-opacity-90 transition-colors text-center"
-      >
-        Create Task
-      </Link>
-
-      {/* Tasks Section */}
-      <div className="w-full max-w-2xl mt-8">
+      {/* Task Summaries */}
+      <div className="space-y-6">
         <div className="flex justify-between mb-4">
-          <div className="text-[#4AA7E3]">
-            Tasks <span className="bg-[#4AA7E3] text-white rounded-full px-2 py-0.5 text-sm">{tasks.length}</span>
+          <div className="flex items-center gap-2 font-semibold">
+            <span className="text-[#4AA7E3]">Tasks</span>
+            <span className="bg-zinc-800 py-1 px-3 rounded-full text-white text-sm font-normal">
+              {tasks.length}
+            </span>
           </div>
-          <div className="text-[#8B5CF6]">
-            Completed <span className="text-gray-400">{tasks.filter(t => t.completed).length} de {tasks.length}</span>
+          <div className="flex items-center gap-2 font-semibold">
+            <span className="text-[#8B5CF6]">Completed</span>
+            <span className="bg-zinc-800 py-1 px-3 rounded-full text-white text-sm font-normal">
+              {tasks.filter(t => t.completed).length} de {tasks.length}
+            </span>
           </div>
         </div>
+         
 
-        {/* Task List */}
-        <div className="space-y-2">
-          {tasks.map(task => (
-            <Task
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              completed={task.completed}
-              color={task.color}
-              onToggle={() => handleToggle(task.id)}
-              onDelete={() => handleDelete(task.id)}
-            />
-          ))}
-        </div>
+         {tasks.length === 0 ?  <div className="border-t border-zinc-800 mb-10"></div> : ''}
+      
+
+        {/* Task List and Empty State View */}
+        {tasks.length === 0 ? (
+          <div className="flex flex-col items-center justify-center text-center text-white mt-10">
+            <Image src={emptyIcon} alt="No tasks" width={70} height={70} />
+            <p className="mt-4 font-semibold text-zinc-300">You don't have any tasks registered yet.</p>
+            <p className="text-zinc-400 mt-5">Create tasks and organize your to-do items.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {tasks.map(task => (
+              <Task
+                key={task.id}
+                {...task}
+                onToggle={() => handleToggle(task.id)}
+                onDelete={() => handleDelete(task.id)}
+              />
+            ))}
+          </div>
+        )}
       </div>
-    </main>
+    </>
   );
 }

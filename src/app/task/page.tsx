@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { CreateTaskButton } from '@/components/CreateTaskButton';
 
 const API_URL = 'http://localhost:3001';
 
@@ -27,8 +28,15 @@ export default function TaskPage() {
     e.preventDefault();
     setError('');
 
-    if (!title.trim()) {
-      setError('Title is required');
+    const trimmedTitle = title.trim();
+
+    if (!trimmedTitle) {
+      setError('Please enter a task title');
+      return;
+    }
+
+    if (trimmedTitle.length > 200) {
+      setError('Task title is too long. Please keep it under 200 characters.');
       return;
     }
 
@@ -39,7 +47,7 @@ export default function TaskPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: title.trim(),
+          title: trimmedTitle,
           color: selectedColor,
         }),
       });
@@ -48,29 +56,39 @@ export default function TaskPage() {
         router.push('/');
       } else {
         const data = await response.json();
-        setError(data.error || 'Failed to create task');
+        setError(data.error || 'Failed to create task. Please try again.');
       }
     } catch (error) {
-      setError('Failed to create task');
+      setError('Something went wrong. Please check your connection and try again.');
     }
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8">
-      {/* Header */}
-      <div className="w-full max-w-2xl">
-        <button 
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-zinc-400 hover:text-zinc-100"
-        >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 24L12 16L20 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
+    <div className="space-y-8">
+      {/* Back Button */}
+      <button 
+      onClick={() => router.back()}
+      className="text-zinc-400 hover:text-zinc-100 transition-colors"
+    >
+      <svg 
+        width="32" 
+        height="32" 
+        viewBox="0 0 32 32" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path 
+          d="M25.3333 16H6.66667M6.66667 16L16 25.3333M6.66667 16L16 6.66667" 
+          stroke="currentColor" 
+          strokeWidth="2" 
+          strokeLinecap="round" 
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="w-full max-w-2xl mt-8 space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="title" className="text-sm text-blue-400">
             Title
@@ -87,7 +105,7 @@ export default function TaskPage() {
           {error && <p className="text-sm text-red-500">{error}</p>}
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 pb-5">
           <label className="text-sm text-blue-400">
             Color
           </label>
@@ -105,13 +123,12 @@ export default function TaskPage() {
           </div>
         </div>
 
-        <button 
-          type="submit"
-          className="w-full p-4 bg-blue-500 text-white rounded-lg hover:bg-opacity-90 transition-colors"
-        >
-          Add Task
-        </button>
+        <CreateTaskButton 
+          text="Add Task" 
+          type="submit" 
+          isLink={false}
+        />
       </form>
-    </main>
+    </div>
   );
 } 
