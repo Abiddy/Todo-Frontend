@@ -1,8 +1,13 @@
-NEXT JS TODO APP built with:
+## NEXT JS TODO APP built with:
 - Next.js
 - TypeScript
 - Tailwind CSS
 - REST API integration with AXIOS, MYSQL DB and Prisma ORM
+
+## DEMO
+
+![413371665-2b6d94e6-5fd4-4c9e-88de-c3ab32ed5016-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/46a66f25-c42b-40ab-afbf-93fbf035253d)
+
 
 ## Getting Started
 
