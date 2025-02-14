@@ -14,21 +14,19 @@
 ```
 src/
 ├── app/
-│   ├── page.tsx                 # Home page - displays task list
+│   ├── page.tsx                # Home Page View - displays the TODO List
 │   ├── task/
-│   │   ├── page.tsx            # Create task page
+│   │   ├── page.tsx            # CREATE TASKS page
 │   │   └── [id]/
-│   │       └── page.tsx        # Edit task page with dynamic route
-│   └── layout.tsx              # Root layout with shared UI
+│   │       └── page.tsx        # EDIT TASKS page with dynamic NEXT JS routing
+│   └── layout.tsx              # Root layout for shared UI
 │
 ├── components/
-│   └── Task.tsx                # Reusable task component (checkbox, title, delete)
+│   └── Task.tsx                # Reusable task card component (checkbox, title, delete icon)
 │
 ├── constants/
-│   └── colors.ts               # Shared color constants and utilities
-│
-└── types/
-    └── task.ts                 # TypeScript interfaces for task data
+    └── colors.ts               # Exporting colors for the task card
+
 ```
 
 ### Key Files
