@@ -6,7 +6,8 @@
 
 ## DEMO
 
-![413371665-2b6d94e6-5fd4-4c9e-88de-c3ab32ed5016-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/46a66f25-c42b-40ab-afbf-93fbf035253d)
+![ScreenRecording2025-02-14at8 27 40AM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/e1f872c9-aed5-4022-a8f7-e5bedfa0a187)
+
 
 
 ## Project Structure
