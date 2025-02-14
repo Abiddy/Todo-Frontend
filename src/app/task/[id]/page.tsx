@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { use } from "react";
 
 const API_URL = 'http://localhost:3001';
 
@@ -17,7 +18,8 @@ const COLORS = [
   { id: 'brown', value: '#92400E' },
 ];
 
-export default function EditTaskPage({ params }: { params: { id: string } }) {
+export default function EditTaskPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
   const [title, setTitle] = useState('');
   const [selectedColor, setSelectedColor] = useState(COLORS[0].id);
@@ -27,7 +29,7 @@ export default function EditTaskPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const response = await fetch(`${API_URL}/tasks/${params.id}`);
+        const response = await fetch(`${API_URL}/tasks/${id}`);
         if (!response.ok) {
           throw new Error('Task not found');
         }
@@ -42,7 +44,7 @@ export default function EditTaskPage({ params }: { params: { id: string } }) {
     };
 
     fetchTask();
-  }, [params.id]);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +56,7 @@ export default function EditTaskPage({ params }: { params: { id: string } }) {
     }
 
     try {
-      const response = await fetch(`${API_URL}/tasks/${params.id}`, {
+      const response = await fetch(`${API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

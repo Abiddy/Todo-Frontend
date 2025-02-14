@@ -69,7 +69,7 @@ export function Task({ id, title, completed, color, onToggle, onDelete }: TaskPr
 
       <button 
         onClick={onDelete}
-        className="h-5 w-5 visible group-hover:visible hover:text-red-500"
+        className="h-5 w-5 visible group-hover:visible text-white hover:text-red-500 transition-colors"
       >
         <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M8.20214 4.98547H6.87158V10.5073H8.20214V4.98547Z" fill="currentColor"/>
