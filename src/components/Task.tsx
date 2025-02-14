@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 interface TaskProps {
   id: string;
@@ -13,12 +14,19 @@ interface TaskProps {
 
 export function Task({ id, title, completed, color, onToggle, onDelete }: TaskProps) {
   const router = useRouter();
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const handleClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('button')) {
       return;
     }
     router.push(`/task/${id}`);
+  };
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      onDelete();
+    }
   };
 
   // Get the color value from the COLORS map
@@ -68,7 +76,7 @@ export function Task({ id, title, completed, color, onToggle, onDelete }: TaskPr
       </div>
 
       <button 
-        onClick={onDelete}
+        onClick={handleDelete}
         className="h-5 w-5 visible group-hover:visible text-white hover:text-red-500 transition-colors"
       >
         <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
