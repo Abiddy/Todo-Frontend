@@ -6,7 +6,8 @@
 
 ## DEMO
 
-![ScreenRecording2025-02-14at8 27 40AM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/e1f872c9-aed5-4022-a8f7-e5bedfa0a187)
+![ScreenRecording2025-02-18at10 41 16AM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/a61a588a-55ab-4f5e-941e-be2701344776)
+
 
 
 
